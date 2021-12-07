@@ -1,14 +1,15 @@
-version: '3.7'
-
+version: "3.7"
 services:
+  # Run the node application
   osfunc:
-    container-name: osfunc
+    container_name: osfunc
     restart: unless-stopped
     environment:
       - NODE_ENV=production
     build:
-      context:
-        - ./
+      context: ./
+
+  # Run the caddy server
   caddy:
     image: caddy/caddy:2.2.1-alpine
     container_name: caddy-service

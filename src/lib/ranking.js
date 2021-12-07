@@ -4,6 +4,7 @@ const os_url = "https://opensea.io/rankings";
 
 async function getRanks() {
   const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
     defaultViewport: null,
     headless: true,
   });
