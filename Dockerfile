@@ -5,6 +5,8 @@ RUN apk --no-cache upgrade && apk add --no-cache chromium
 
 ADD package.json /tmp/package.json
 
+RUN rm -rf build
+
 RUN cd /tmp && npm install -q
 
 ADD ./ /src
@@ -12,6 +14,6 @@ RUN rm -rf /src/node_modules && cp -a /tmp/node_modules /src
 
 WORKDIR /src
 
-RUN mkdir ./logs && touch ./logs/info.log
+RUN npm run-script build
 
-CMD ["node", "src/index.js"]
+CMD ["node", "build/index.js"]

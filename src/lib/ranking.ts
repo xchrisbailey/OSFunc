@@ -1,8 +1,9 @@
-const puppeteer = require("puppeteer");
+import puppeteer from "puppeteer";
+import { Collection } from "../types";
 
 const os_url = "https://opensea.io/rankings";
 
-async function getRanks() {
+export const getRanks = async (): Promise<Collection[]> => {
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_BIN || null,
     args: [
@@ -92,6 +93,4 @@ async function getRanks() {
   } finally {
     await browser.close();
   }
-}
-
-module.exports = getRanks;
+};
