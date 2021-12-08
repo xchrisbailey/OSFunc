@@ -12,11 +12,12 @@ export const getRanks = async (): Promise<Collection[]> => {
     executablePath: process.env.CHROME_BIN || null,
     args: [
       "--no-sandbox",
-      "--headless",
+      // "--headless",
       /* "--use-gl=swiftshader",
       "--disable-software-rasterizer",
       "--disable-dev-shm-usage", */
     ],
+    headless: false,
   });
 
   try {
@@ -39,59 +40,6 @@ export const getRanks = async (): Promise<Collection[]> => {
 
     await page.setJavaScriptEnabled(true);
     page.setDefaultNavigationTimeout(0);
-
-    await page.setRequestInterception(true);
-    page.on("request", (req) => {
-      if (
-        req.resourceType() == "stylesheet" ||
-        req.resourceType() == "font" ||
-        req.resourceType() == "image"
-      ) {
-        req.abort();
-      } else {
-        req.continue();
-      }
-    });
-
-    await page.evaluateOnNewDocument(() => {
-      //pass webdriver check
-      Object.defineProperty(navigator, "webdriver", {
-        get: () => false,
-      });
-    });
-
-    await page.evaluateOnNewDocument(() => {
-      //pass chrome check
-      window.chrome = {
-        runtime: {},
-        // etc.
-      };
-    });
-
-    await page.evaluateOnNewDocument(() => {
-      //pass plugins check
-      const originalQuery = window.navigator.permissions.query;
-      return (window.navigator.permissions.query = (parameters) =>
-        parameters.name === "notifications"
-          ? Promise.resolve({ state: Notification.permission })
-          : originalQuery(parameters));
-    });
-
-    await page.evaluateOnNewDocument(() => {
-      // Overwrite the `plugins` property to use a custom getter.
-      Object.defineProperty(navigator, "plugins", {
-        // This just needs to have `length > 0` for the current test,
-        // but we could mock the plugins too if necessary.
-        get: () => [1, 2, 3, 4, 5],
-      });
-    });
-
-    await page.evaluateOnNewDocument(() => {
-      // Overwrite the `plugins` property to use a custom getter.
-      Object.defineProperty(navigator, "languages", {
-        get: () => ["en-US", "en"],
-      });
-    });
 
     await page.goto(os_url, { waitUntil: "domcontentloaded" });
     // await page.waitForSelector("[role='row']");
