@@ -24,6 +24,9 @@ export const getRanks = async (): Promise<Collection[]> => {
     await page.setViewport({ width: 1900, height: 1200 });
     await page.goto(os_url, { waitUntil: "domcontentloaded" });
     // await page.waitForSelector("[role='row']");
+    console.log(
+      await page.evaluate(() => document.querySelector("*").outerHTML)
+    );
 
     const result = await page.$$eval('[role="row"]', (el) =>
       el.map((e) => {
