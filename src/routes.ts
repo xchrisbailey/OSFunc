@@ -9,7 +9,7 @@ import { getRanks } from "./lib/ranking";
 export default (
   fastify: FastifyInstance,
   _options: FastifyServerOptions,
-  next
+  next: () => void
 ): void => {
   fastify.get(
     "/rank",
