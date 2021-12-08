@@ -12,4 +12,6 @@ RUN rm -rf /src/node_modules && cp -a /tmp/node_modules /src
 
 WORKDIR /src
 
+RUN mkdir ./logs && touch ./logs/info.log
+
 CMD ["node", "src/index.js"]

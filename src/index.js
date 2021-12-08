@@ -1,4 +1,5 @@
 const express = require("express");
+const fs = require("fs");
 
 const logFile = fs.createWriteStream("./logs/info.log", { flags: "a" }); //use {flags: 'w'} to open in write mode
 const pino = require("pino")(logFile);
