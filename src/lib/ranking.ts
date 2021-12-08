@@ -1,9 +1,12 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { Collection } from "../types";
 
 const os_url = "https://opensea.io/rankings";
 
 export const getRanks = async (): Promise<Collection[]> => {
+  puppeteer.use(StealthPlugin());
+
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_BIN || null,
     args: [
