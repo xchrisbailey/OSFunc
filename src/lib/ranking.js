@@ -5,7 +5,8 @@ const os_url = "https://opensea.io/rankings";
 async function getRanks() {
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_BIN || null,
-    args: ["--no-sandbox", "--headless", "--disable-gpu"],
+    args: ["--no-sandbox", "--disable-gpu"],
+    headless: false,
   });
 
   try {
