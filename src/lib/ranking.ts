@@ -15,12 +15,7 @@ export const getRanks = async (): Promise<Collection[]> => {
 
   try {
     const page = await browser.newPage();
-    await page.setUserAgent(
-      randomUserAgent.getRandom({
-        deviceCategory: "desktop",
-        os: "Windows",
-      })
-    );
+    await page.setUserAgent(randomUserAgent.getRandom());
 
     await page.setViewport({
       width: 1920 + Math.floor(Math.random() * 100),
@@ -35,7 +30,9 @@ export const getRanks = async (): Promise<Collection[]> => {
     page.setDefaultNavigationTimeout(0);
 
     await page.goto(os_url, { waitUntil: "domcontentloaded" });
-    // await page.waitForSelector("[role='row']");
+    await page.waitForSelector("[role='row']");
+
+    // debugging cloudflare troubles
     console.log(
       await page.evaluate(() => document.querySelector("*").outerHTML)
     );
