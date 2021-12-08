@@ -8,7 +8,7 @@ export const getRanks = async (): Promise<Collection[]> => {
   puppeteer.use(StealthPlugin());
 
   const browser = await puppeteer.launch({
-    // executablePath: process.env.CHROME_BIN || null,
+    executablePath: process.env.CHROME_BIN || null,
     args: [
       "--no-sandbox",
       "--headless",
