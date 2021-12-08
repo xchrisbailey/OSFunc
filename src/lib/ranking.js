@@ -5,15 +5,22 @@ const os_url = "https://opensea.io/rankings";
 async function getRanks() {
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_BIN || null,
-    args: ["--no-sandbox", "--disable-gpu"],
+    args: [
+      "--no-sandbox",
+      "--headless",
+      "--use-gl=swiftshader",
+      "--disable-software-rasterizer",
+      "--disable-dev-shm-usage",
+    ],
     headless: false,
   });
 
   try {
     const page = await browser.newPage();
     await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
+      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
     );
+
     await page.setViewport({ width: 1900, height: 1200 });
     await page.goto(os_url, { waitUntil: "domcontentloaded" });
     await page.waitForSelector("[role='row']");
