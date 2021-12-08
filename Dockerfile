@@ -1,5 +1,6 @@
 FROM node:17-alpine
 
+ENV CHROME_BIN=/usr/bin/chromium-browser
 RUN apk --no-cache upgrade && apk add --no-cache chromium
 
 ADD package.json /tmp/package.json

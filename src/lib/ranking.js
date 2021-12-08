@@ -4,9 +4,8 @@ const os_url = "https://opensea.io/rankings";
 
 async function getRanks() {
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    defaultViewport: null,
-    headless: true,
+    executablePath: process.env.CHROME_BIN || null,
+    args: ["--no-sandbox", "--headless", "--disable-gpu"],
   });
 
   try {
@@ -15,7 +14,7 @@ async function getRanks() {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"
     );
     await page.setViewport({ width: 1900, height: 1200 });
-    await page.goto(os_url);
+    await page.goto(os_url, { waitUntil: "domcontentloaded" });
     await page.waitForSelector("[role='row']");
 
     const result = await page.$$eval('[role="row"]', (el) =>
