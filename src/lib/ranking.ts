@@ -10,14 +10,7 @@ export const getRanks = async (): Promise<Collection[]> => {
 
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_BIN || null,
-    args: [
-      "--no-sandbox",
-      // "--headless",
-      /* "--use-gl=swiftshader",
-      "--disable-software-rasterizer",
-      "--disable-dev-shm-usage", */
-    ],
-    headless: false,
+    args: ["--no-sandbox", "--headless", "--disable-dev-shm-usage"],
   });
 
   try {

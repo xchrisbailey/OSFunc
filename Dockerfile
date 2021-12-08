@@ -1,7 +1,15 @@
 FROM node:17-alpine
 
-ENV CHROME_BIN=/usr/bin/chromium-browser
-RUN apk --no-cache upgrade && apk add --no-cache chromium
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 ADD package.json /tmp/package.json
 
