@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "express-pino-logger": "^7.0.0",
+    "pino": "^7.5.1",
     "puppeteer": "^12.0.1"
   },
   "devDependencies": {
