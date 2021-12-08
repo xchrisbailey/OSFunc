@@ -13,7 +13,6 @@ export const getRanks = async (): Promise<Collection[]> => {
       "--disable-software-rasterizer",
       "--disable-dev-shm-usage",
     ],
-    headless: false,
   });
 
   try {
